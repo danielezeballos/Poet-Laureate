@@ -85,9 +85,9 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  // Public read of config so the player can load tracks/backgrounds.
   if (requestPath === "/api/config" && req.method === "GET") {
-    requireAdmin(req, res, () => {
-      loadConfig((err, cfg) => {
+    loadConfig((err, cfg) => {
       if (err) {
         res.writeHead(500, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ error: "Could not read config" }));
@@ -95,7 +95,6 @@ const server = http.createServer((req, res) => {
       }
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify(cfg));
-      });
     });
     return;
   }
